@@ -1,5 +1,10 @@
 const fs = require('fs');
-const generateId = require('./id');
+const crypto = require('crypto');
+
+// Generate a random hexidecimal string
+function generateId(bytes=8) {
+  return crypto.randomBytes(8).toString('hex');
+}
 
 function readPeople() {
   const fileContents = fs.readFileSync('people.json', 'utf8');
@@ -20,10 +25,8 @@ function createPerson(name, age) {
 
 function updatePerson(id, newFields) {
   writePeople(readPeople().map(person => {
-    if (person.id == id) {
-      return { ...person, ...newFields, id, };
-    }
-    return person;
+    if (person.id == id) return { ...person, ...newFields, id, };
+    else return person;
   }));
 }
 
