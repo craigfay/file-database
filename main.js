@@ -16,24 +16,25 @@ function writePeople(data) {
 function createPerson(name, age) {
   const id = generateId();
   const people = readPeople();
-  people.push({ id, name, age });
+  const person = { id, name, age };
+  people.push(person);
   writePeople(people);
+  return person;
 }
 
-function updatePerson(name, age) {
-  const people = readPeople();
-  for (const person of people) {
-    if (person.name == name) {
-      person.age = age;
-      writePeople(people);
-      return true;
+function updatePerson(id, newFields) {
+  const updatedPeople = readPeople().map(person => {
+    if (person.id == id) {
+      return { ...person, ...newFields, id, };
     }
-  }
+    return person;
+  });
+  writePeople(updatedPeople);
 }
 
 function main() {
-  createPerson("jenny", 28);
-  updatePerson("jenny", 45);
+  const jenny = createPerson("jenny", 28);
+  updatePerson(jenny.id, { age: 45 });
   console.log(readPeople());
 }
 
