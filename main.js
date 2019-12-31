@@ -1,4 +1,3 @@
-const http = require('http');
 const fs = require('fs');
 const generateId = require('./id');
 
@@ -14,22 +13,18 @@ function writePeople(data) {
 }
 
 function createPerson(name, age) {
-  const id = generateId();
-  const people = readPeople();
-  const person = { id, name, age };
-  people.push(person);
-  writePeople(people);
+  const person = { id: generateId(), name, age };
+  writePeople([...readPeople(), person]);
   return person;
 }
 
 function updatePerson(id, newFields) {
-  const updatedPeople = readPeople().map(person => {
+  writePeople(readPeople().map(person => {
     if (person.id == id) {
       return { ...person, ...newFields, id, };
     }
     return person;
-  });
-  writePeople(updatedPeople);
+  }));
 }
 
 function deletePerson(id) {
@@ -41,7 +36,6 @@ function deletePerson(id) {
 function main() {
   const jenny = createPerson("jenny", 28);
   updatePerson(jenny.id, { age: 45 });
-  console.log(readPeople());
   deletePerson(jenny.id);
 }
 
