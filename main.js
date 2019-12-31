@@ -32,10 +32,17 @@ function updatePerson(id, newFields) {
   writePeople(updatedPeople);
 }
 
+function deletePerson(id) {
+  writePeople(readPeople().filter(person => {
+    return person.id !== id;
+  }));
+}
+
 function main() {
   const jenny = createPerson("jenny", 28);
   updatePerson(jenny.id, { age: 45 });
   console.log(readPeople());
+  deletePerson(jenny.id);
 }
 
 main();
