@@ -35,11 +35,3 @@ function deletePerson(id) {
     return person.id !== id;
   }));
 }
-
-function main() {
-  const jenny = createPerson("jenny", 28);
-  updatePerson(jenny.id, { age: 45 });
-  deletePerson(jenny.id);
-}
-
-main();
