@@ -35,3 +35,11 @@ function deletePerson(id) {
     return person.id !== id;
   }));
 }
+
+module.exports = {
+  readPeople,
+  writePeople,
+  createPerson,
+  updatePerson,
+  deletePerson,
+}
